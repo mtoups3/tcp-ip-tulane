@@ -4,6 +4,7 @@ Wait for the profile instance to start, then log in to each node by clicking on 
 """
 
 ## 2025 update: remove VNC and routable_control_ip to make this start more easily on cloudlab
+## also: make hardware_type selectable as parameter
 
 # Import the Portal object.
 import geni.portal as portal
@@ -18,27 +19,46 @@ pc = portal.Context()
 # Create a Request object to start building the RSpec.
 request = pc.makeRequestRSpec()
 
+pc.defineParameter("hardware_type",
+                   "Optional physical node type (d710, d430, xl170, sm110p, etc)",
+                   portal.ParameterType.STRING, "")
+
+# Retrieve the values the user specifies during instantiation.
+params = pc.bindParameters()
+
+if params.hardware_type != "":
+    node.hardware_type = params.hardware_type
+
 # Node romeo
-node_romeo = request.XenVM('romeo')
+#node_romeo = request.XenVM('romeo')
+node_romeo = request.RawPC("node")
+if params.hardware_type != "": # if students chose a hardware type (like d710 ?)
+    node_romeo.hardware_type = params.hardware_type
 node_romeo.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU22-64-STD'
 node_romeo.addService(pg.Execute('/bin/sh','wget -O - https://raw.githubusercontent.com/ffund/tcp-ip-essentials/cloudlab/scripts/no-offload.sh | bash'))
 iface0 = node_romeo.addInterface('interface-1', pg.IPv4Address('10.0.1.100','255.255.255.0'))
-node_romeo.exclusive = False
+#node_romeo.exclusive = False
 # no VNC, thus no routable IP required
 #node_romeo.routable_control_ip = True # required for VNC
 #node_romeo.startVNC()
 
 # Node juliet
-node_juliet = request.XenVM('juliet')
+#node_juliet = request.XenVM('juliet')
+node_juliet = request.RawPC("node")
+if params.hardware_type != "": # if students chose a hardware type (like d710 ?)
+    node_juliet.hardware_type = params.hardware_type
 node_juliet.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU22-64-STD'
 node_juliet.addService(pg.Execute('/bin/sh','wget -O - https://raw.githubusercontent.com/ffund/tcp-ip-essentials/cloudlab/scripts/no-offload.sh | bash'))
 iface1 = node_juliet.addInterface('interface-3', pg.IPv4Address('10.0.2.100','255.255.255.0'))
-node_juliet.exclusive = False
+#node_juliet.exclusive = False
 #node_juliet.routable_control_ip = True # required for VNC
 #node_juliet.startVNC()
 
 # Node router
-node_router = request.XenVM('router')
+#node_router = request.XenVM('router')
+node_router = request.RawPC("node")
+if params.hardware_type != "": # if students chose a hardware type (like d710 ?)
+    node_router.hardware_type = params.hardware_type
 node_router.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU22-64-STD'
 node_router.addService(pg.Execute('/bin/sh','wget -O - https://raw.githubusercontent.com/ffund/tcp-ip-essentials/cloudlab/scripts/no-offload.sh | bash'))
 iface2 = node_router.addInterface('interface-0', pg.IPv4Address('10.0.1.10','255.255.255.0'))
