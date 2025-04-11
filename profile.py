@@ -26,9 +26,6 @@ pc.defineParameter("hardware_type",
 # Retrieve the values the user specifies during instantiation.
 params = pc.bindParameters()
 
-if params.hardware_type != "":
-    node.hardware_type = params.hardware_type
-
 # Node romeo
 #node_romeo = request.XenVM('romeo')
 node_romeo = request.RawPC("node")
