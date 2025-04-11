@@ -28,7 +28,7 @@ params = pc.bindParameters()
 
 # Node romeo
 #node_romeo = request.XenVM('romeo')
-node_romeo = request.RawPC("node")
+node_romeo = request.RawPC("romeo")
 if params.hardware_type != "": # if students chose a hardware type (like d710 ?)
     node_romeo.hardware_type = params.hardware_type
 node_romeo.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU22-64-STD'
@@ -41,7 +41,7 @@ iface0 = node_romeo.addInterface('interface-1', pg.IPv4Address('10.0.1.100','255
 
 # Node juliet
 #node_juliet = request.XenVM('juliet')
-node_juliet = request.RawPC("node")
+node_juliet = request.RawPC("juliet")
 if params.hardware_type != "": # if students chose a hardware type (like d710 ?)
     node_juliet.hardware_type = params.hardware_type
 node_juliet.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU22-64-STD'
@@ -53,7 +53,7 @@ iface1 = node_juliet.addInterface('interface-3', pg.IPv4Address('10.0.2.100','25
 
 # Node router
 #node_router = request.XenVM('router')
-node_router = request.RawPC("node")
+node_router = request.RawPC("router")
 if params.hardware_type != "": # if students chose a hardware type (like d710 ?)
     node_router.hardware_type = params.hardware_type
 node_router.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU22-64-STD'
