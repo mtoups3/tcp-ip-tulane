@@ -28,8 +28,8 @@ request = pc.makeRequestRSpec()
 
 # Node romeo
 node_romeo = request.XenVM('romeo')
-node_romeo.Site('Site 1') # put this VM onto Site 1 (should help? --mt)
 node_romeo.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU22-64-STD'
+node_romeo.Site('Site 1') # put this VM onto Site 1 (should help? --mt)
 node_romeo.addService(pg.Execute('/bin/sh','wget -O - https://raw.githubusercontent.com/ffund/tcp-ip-essentials/cloudlab/scripts/no-offload.sh | bash'))
 iface0 = node_romeo.addInterface('interface-1', pg.IPv4Address('10.0.1.100','255.255.255.0'))
 #node_romeo.exclusive = False
@@ -39,8 +39,8 @@ iface0 = node_romeo.addInterface('interface-1', pg.IPv4Address('10.0.1.100','255
 
 # Node juliet
 node_juliet = request.XenVM('juliet')
-node_juliet.Site('Site 1') # put this VM onto Site 1 (should help? --mt)
 node_juliet.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU22-64-STD'
+node_juliet.Site('Site 1') # put this VM onto Site 1 (should help? --mt)
 node_juliet.addService(pg.Execute('/bin/sh','wget -O - https://raw.githubusercontent.com/ffund/tcp-ip-essentials/cloudlab/scripts/no-offload.sh | bash'))
 iface1 = node_juliet.addInterface('interface-3', pg.IPv4Address('10.0.2.100','255.255.255.0'))
 #node_juliet.exclusive = False
@@ -49,12 +49,12 @@ iface1 = node_juliet.addInterface('interface-3', pg.IPv4Address('10.0.2.100','25
 
 # Node router
 node_router = request.XenVM('router')
-node_router.Site('Site 1') # put this VM onto Site 1 (should help? --mt)
 node_router.disk_image = 'urn:publicid:IDN+emulab.net+image+emulab-ops:UBUNTU22-64-STD'
+node_router.Site('Site 1') # put this VM onto Site 1 (should help? --mt)
 node_router.addService(pg.Execute('/bin/sh','wget -O - https://raw.githubusercontent.com/ffund/tcp-ip-essentials/cloudlab/scripts/no-offload.sh | bash'))
 iface2 = node_router.addInterface('interface-0', pg.IPv4Address('10.0.1.10','255.255.255.0'))
 iface3 = node_router.addInterface('interface-2', pg.IPv4Address('10.0.2.10','255.255.255.0'))
-node_router.exclusive = False
+#node_router.exclusive = False
 #node_router.routable_control_ip = True # required for VNC
 #node_router.startVNC()
 
